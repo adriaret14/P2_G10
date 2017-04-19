@@ -1,9 +1,19 @@
 #include <stdio.h>
+#include <unordered_map>
+#include <vector>
+#include <string>
 #include <iostream>
 #include <fstream>
 #include <string>
 
+
 void main() {
+	std::unordered_map<std::string, std::pair<std::string, std::string>>mapa;
+
+	mapa["Dust"] = { "Air", "Earth" };
+	mapa["Gunpowder"] = { "Dust", "Fire" };
+
+
 	
 	//Creamos las variables necesarias para abrir el fichero
 	std::string linia;
