@@ -11,7 +11,8 @@ public:
 	void setScore( int );
 	int getScore();
 
-	void updateInv(std::string, std::string);
+	void addElement(std::string);
+	void delElement(int i);
 	std::vector<std::string> getInv();
 
 	void updateDesc(std::string);
