@@ -8,13 +8,9 @@
 
 
 void main() {
+	//Creamos el unordered_map para almacenar los datos del juego
 	std::unordered_map<std::string, std::pair<std::string, std::string>>mapa;
 
-	mapa["Dust"] = { "Air", "Earth" };
-	mapa["Gunpowder"] = { "Dust", "Fire" };
-
-
-	
 	//Creamos las variables necesarias para abrir el fichero
 	std::string linia;
 	std::string separaciones[3];
@@ -28,16 +24,24 @@ void main() {
 		//Guardamos cada linia del archivo en la variable linia
 		std::getline(archivo, linia);
 
-		std::cout << linia << std::endl;
+				//std::cout << linia << std::endl;
 		pos=linia.find("=");
 		separaciones[0] = linia.substr(0, pos-1);
 		pos1 = linia.find("+");
-		separaciones[1] = linia.substr(pos + 2, (pos1-2)-pos);
+		separaciones[1] = linia.substr(pos + 2, (pos1-3)-pos);
 		separaciones[2] = linia.substr(pos1+2);
 
-		std::cout << separaciones[0] << std::endl << separaciones[1] << std::endl << separaciones[2] << std::endl;
+				//std::cout << separaciones[0] << std::endl << separaciones[1] << std::endl << separaciones[2] << std::endl;
 
-	 }
+		mapa[separaciones[0]] = { separaciones[1], separaciones[2]};
+	}
 
+	//Bucle para recorrer todo el unordered_map
+
+	for (auto it = mapa.begin(); it != mapa.end(); it++) {
+		std::cout << it->first  << " //// "<< it->second.first << " - " << it->second.second << std::endl;
+	}
+
+	
 
 }
