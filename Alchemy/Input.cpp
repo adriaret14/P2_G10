@@ -11,6 +11,24 @@ Input::~Input()
 {
 }
 
+void Input::addBasics()
+{
+	p.addElement("Air");
+	p.addElement("Earth");
+	p.addElement("Fire");
+	p.addElement("Water");
+}
+
+void Input::addElement(int i)
+{
+	p.addElement(p.getInv()[i]);
+}
+
+void Input::delElement(int i)
+{
+	p.delElement(i);
+}
+
 void Input::help()
 {
 	std::cout << "Lista de comandos: " << std::endl;
