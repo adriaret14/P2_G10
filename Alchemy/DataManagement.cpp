@@ -12,18 +12,27 @@ DataManagement::DataManagement(std::string url)
 	std::size_t pos1;
 
 	archivo.open(url);
-	while (!archivo.eof())
+	if (archivo.fail())
 	{
-		std::getline(archivo, linia);
-
-		pos = linia.find("=");
-		separaciones[0] = linia.substr(0, pos - 1);
-		pos1 = linia.find("+");
-		separaciones[1] = linia.substr(pos + 2, (pos1 - 3) - pos);
-		separaciones[2] = linia.substr(pos1 + 2);
-
-		mapa[separaciones[0]] = { separaciones[1], separaciones[2] };
+		system("pause");
 	}
+	else {
+		while (!archivo.eof())
+		{
+			std::getline(archivo, linia);
+
+			pos = linia.find("=");
+			separaciones[0] = linia.substr(0, pos - 1);
+			pos1 = linia.find("+");
+			separaciones[1] = linia.substr(pos + 2, (pos1 - 3) - pos);
+			separaciones[2] = linia.substr(pos1 + 2);
+
+			mapa[separaciones[0]] = { separaciones[1], separaciones[2] };
+		}
+	}
+	
+
+	archivo.close();
 }
 
 DataManagement::~DataManagement()

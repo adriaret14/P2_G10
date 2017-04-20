@@ -6,6 +6,8 @@
 #include <fstream>
 #include <string>
 #include "DataManagement.h"
+#include "Player.h"
+#include "Input.h"
 
 
 void main() {
