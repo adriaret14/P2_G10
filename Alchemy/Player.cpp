@@ -23,9 +23,17 @@ int Player::getScore()
 	return score;
 }
 
-void Player::addElement(std::string element)
+void Player::addBasics()
 {
-	inventario.push_back(element);
+	inventario.push_back("Air");
+	inventario.push_back("Earth");
+	inventario.push_back("Fire");
+	inventario.push_back("Water");
+}
+
+void Player::addElement(int num)
+{
+	inventario.push_back(this->getStringElement(num));
 }
 
 void Player::delElement(int i)
@@ -46,6 +54,11 @@ void Player::updateDesc(std::string elemento)
 std::vector<std::string> Player::getDesc()
 {
 	return descubiertos;
+}
+
+std::string Player::getStringElement(int num)
+{
+	return inventario[num];
 }
 
 

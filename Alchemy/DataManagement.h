@@ -6,9 +6,9 @@
 class DataManagement
 {
 public:
-	DataManagement(std::string);
-	~DataManagement();
+	DataManagement(std::string);													//Constructor de la clase DataManagement
+	~DataManagement();																//Destructor de la clase DataManagement
 
-	std::unordered_map<std::string, std::pair<std::string, std::string>>mapa;
+	std::unordered_map<std::string, std::pair<std::string, std::string>>mapa;		//Lista con todas las combinaciones disponibles
 };
 

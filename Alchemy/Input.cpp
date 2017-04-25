@@ -1,14 +1,27 @@
 #include "Input.h"
 
 
+Input::Input(DataManagement &data, Player &player):
+	dm(data),
+	p(player)
+{
+}
 
-Input::Input()
+Input::~Input()
 {
 }
 
 
-Input::~Input()
+void Input::info(int nElemento)
 {
+	std::string elemento = p.getStringElement(nElemento);
+	std::string url = "https://en.wikipedia.org/wiki/"+elemento;
+	//std::string cadena;
+	char * cadena = new char[url.length() + 1];
+	//std::strcpy(cadena, url.c_str());
+	strcpy_s(cadena,strlen(cadena), url.c_str());
+
+	ShellExecuteA(nullptr, "open", cadena, nullptr, nullptr, SW_SHOWNORMAL);
 }
 
 void Input::help()
