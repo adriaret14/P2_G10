@@ -21,7 +21,8 @@ void Input::info(int nElemento)
 	//std::strcpy(cadena, url.c_str());
 	strcpy_s(cadena,strlen(cadena), url.c_str());
 
-	ShellExecuteA(nullptr, "open", cadena, nullptr, nullptr, SW_SHOWNORMAL);
+	ShellExecuteA(nullptr, "open", cadena, nullptr, nullptr, SW_SHOWNORMAL);
+
 }
 
 void Input::help()
