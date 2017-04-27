@@ -4,6 +4,7 @@
 #include <iostream>
 #include <windows.h>
 #include <string>
+
 class Input
 {
 public:
