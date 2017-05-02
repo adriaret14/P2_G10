@@ -85,59 +85,63 @@ void main() {
 
 		std::cout << "Your current score: " << jugador.getScore() << std::endl;
 		std::cout << "You have these elements: " << std::endl;
-		int position = 1;
-		for (std::vector<std::string>::iterator it = jugador.getInv().begin(); it != jugador.getInv().end(); ++it) { 
-			//No funciona y no se pq :( supongo que en las 2 funciones de input (sort y clear) ocurrira el mismo error.
-			std::cout << position << ": " << *it << std::endl;
-			position++;
+
+		//Pol para recorrer vctores, dado que nos permiten acceder por posicion ahorrate los iteradores, es mas eficaz usar un contador.
+		for (int i=0; i < jugador.getInventorySize(); i++) { 
+			std::cout << i+1 << ": " << jugador.getStringElement(i) << std::endl;	
 		}
-		std::string input;
-		do {
-			
-			std::cout << std::endl << "What do you want to do?" << std::endl;
-			std::cin >> input;
-			if (datos.mapa.count(input) == 0) { std::cout << "Command unrecognized. Please type help to see the list of commands." << std::endl; }
-		} while (datos.mapa.count(input) == 0);
-			
-		std::size_t pos = input.find(" ");
 		std::string command;
 		std::string parameter;
+		std::string input;
 		bool param;
-		if (pos != std::string::npos) {
-			command = input.substr(0, pos);
-			parameter = input.substr(pos + 1);
-			param = true;
-		}
-		else {
-			command = input;
-			param = false;
-		}
-		switch (palabras[command])//-_-  malditas enums tt.   -SOLVED- 	 Cheers, love! The cavalry's here! <3
+		bool numbers;
+		do {
+			std::cout << std::endl << "What do you want to do?" << std::endl;
+			std::getline(std::cin, input);
+			std::size_t pos = input.find(" ");
+			
+			
+			if (pos != std::string::npos) {
+				command = input.substr(0, pos);
+				parameter = input.substr(pos + 1);
+				param = true;
+			}
+			else {
+				command = input;
+				param = false;
+			}
+
+			
+			
+			if (palabras.count(command) == 0) { std::cout << "Command unrecognized. Please type help to see the list of commands." << std::endl; }
+		} while (palabras.count(command) == 0);
+			
+		
+		switch (palabras[command])//-_-  malditas enums tt.   -SOLVED- 	 Cheers, love! The cavalry's here! <3     -hahahahaa
 		{
 			case PALABRA::ADD:
-			{
+				if (parameter == "basics") {
+					jugador.addBasics();
+				}
+				else {
+					jugador.addElement(std::stoi(parameter)-1);
+				}
 				break;
-			}
 			case PALABRA::DEL:
-			{
+				jugador.delElement(std::stoi(parameter) - 1);
 				break;
-			}
 			case PALABRA::INFO:
-			{
+				entrada.info(std::stoi(parameter)-1);
 				break;
-			}
 			case PALABRA::SORT:
-			{
+				jugador.sort();
 				break;
-			}
 			case PALABRA::CLEAN:
-			{
+				jugador.clean();
 				break;
-			}
 			case PALABRA::HELP:
-			{
-				break;
-			}					
+				entrada.help();
+				break;					
 		}
 	} while (flag!=1);
 }

@@ -46,6 +46,11 @@ std::vector<std::string> Player::getInv()
 	return inventario;
 }
 
+int Player::getInventorySize()
+{	
+	return inventario.size();
+}
+
 void Player::updateDesc(std::string elemento)
 {
 	descubiertos.push_back(elemento);
@@ -60,5 +65,15 @@ std::string Player::getStringElement(int num)
 {
 	return inventario[num];
 }
+
+void Player::sort()
+{
+}
+
+void Player::clean()
+{
+}
+
+
 
 

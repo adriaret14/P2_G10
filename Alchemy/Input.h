@@ -13,8 +13,6 @@ public:
 
 	
 	void info(int);									//Metodo de consulta con Wikipedia para recibir informacion de un elemento
-	void sort();									//Metodo de ordenado del inventario del jugador
-	void clean();									//Metodo para eliminar todos los elementos repetidos del inventario
 	void help();									//Metodo para mostrar la lista de comandos disponibles por pantalla
 
 private:
