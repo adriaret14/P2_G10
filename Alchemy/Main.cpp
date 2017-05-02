@@ -11,6 +11,7 @@
 #include "Player.h"
 #include "Input.h"
 
+//Enum con el que controlaremos la entrada de órdenes por teclado
 enum class PALABRA {
 	ADD,
 	DEL,
@@ -23,16 +24,7 @@ enum class PALABRA {
 
 void main() {
 
-
-	//Bucles para recorrer todo el unordered_map
-
-	/*for (auto it = mapa.begin(); it != mapa.end(); it++) {
-		std::cout << it->first  << " //// "<< it->second.first << " - " << it->second.second << std::endl;
-	}*/
-
-	/*for (auto it = datos.mapa.begin(); it != datos.mapa.end(); it++) {
-		std::cout << it->first << " //// " << it->second.first << " - " << it->second.second << std::endl;
-	}*/
+	//Creamos los objetos y variables necesarios
 	std::unordered_map<std::string, PALABRA>palabras;
 	palabras["add"] = PALABRA::ADD;
 	palabras["delete"] = PALABRA::DEL;
@@ -41,26 +33,16 @@ void main() {
 	palabras["help"] = PALABRA::HELP;
 	palabras["sort"] = PALABRA::SORT;
 
-	//Creamos los objetos necesarios
-
 	DataManagement datos("elements.dat");
 	Player jugador;
 	Input entrada(datos, jugador);
 
-	//Pruebas metodos jugador
+	int flag = 0;
+	int flag2 = 0;
+	int n1, n2;
+	int score = 0;
 
-	//jugador.addElement(1);
-	//jugador.addBasics();
-	//jugador.delElement(3);
-	//std::vector<std::string> aux = jugador.getInv();
-	//std::cout << aux[4];
-	//std::cout << jugador.getStringElement(2);
-
-	
-	//Pruebas de Input
-	//entrada.info(1);
-	//entrada.help();
-	//std::cout << jugador.getStringElement(6);
+	//Preparamos el output del juego
 	std::cout << "-------------------------------------" << std::endl;
 	std::cout << " ****** BLEINZ & KANG ALCHEMY ****** " << std::endl;
 	std::cout << "-------------------------------------" << std::endl << std::endl << std::endl;
@@ -74,22 +56,21 @@ void main() {
 	std::cout << "-Enter 'clean' to erase all the repeated elements from your elements list" << std::endl;
 	std::cout << "-Enter 'help' to show this tutorial again" << std::endl << std::endl << std::endl;
 	std::cout << "GOOD LUCK ALCHEMIST!" << std::endl << std::endl;
-	int flag = 0;
-	int flag2 = 0;
-	int n1, n2;
 
+
+	//Bucle principal del juego con el que mantentemos la partida corriendo constantemente
 	do {
-		std::cin.clear(); // clears all error state flags
-						  // extracts characters from the input buffer and discards them
+		std::string command = "";
+		std::string parameter = "";
+
+		std::string input;
+		bool param = false;
+		bool numbers;
+
+
+		//Mostramos por pantalla la puntuación del jugador y su inventario
+		std::cin.clear();
 		std::cin.ignore(std::cin.rdbuf()->in_avail());
-
-		//Para parar el juego debemos pulsar escape
-		if (_kbhit()) {
-			if (_getch()==27) {
-				flag = 1;
-			}
-		}
-
 		std::cout << "Your current score: " << jugador.getScore() << std::endl;
 		std::cout << "You have these elements: " << std::endl;
 
@@ -97,18 +78,17 @@ void main() {
 		for (int i=0; i < jugador.getInventorySize(); i++) { 
 			std::cout << i+1 << ": " << jugador.getStringElement(i) << std::endl;	
 		}
-		std::string command="";
-		std::string parameter="";
+		
 
-		std::string input;
-		bool param=false;
-		bool numbers;
+		//Bucle secundario del juego donde hacemos comprobación de ordenes y operaciones lógicas
 		do {
+
+			//Pedimos la entrada de ordenes para el juego
 			std::cout << std::endl << "What do you want to do?" << std::endl;
 			std::getline(std::cin, input);
 			std::size_t pos = input.find(" ");
 			
-			
+			//Tratamos la entrada de datos desde teclado
 			if (pos != std::string::npos) {
 				command = input.substr(0, pos);
 				parameter = input.substr(pos + 1);
@@ -119,17 +99,21 @@ void main() {
 				param = false;
 			}
 
-			//Creamos un nuevo elemento
+			//Creamos un nuevo elemento, comprobando independientemente del orden en el que pongamos los elementos
 			if (atoi(command.c_str()) != 0) {
+				//Parse string -> int 
 				n1 = atoi(command.c_str());
 				n2 = atoi(parameter.c_str());
 
+				//Comprobación de combinación introducida con el archivo que hace de BBDD
 				for (auto it = datos.mapa.begin(); it != datos.mapa.end(); it++) {
 					if (it->second.first == jugador.getStringElement(n1-1))
 					{
 						if (it->second.second == jugador.getStringElement(n2-1)) {
 							jugador.pushToInv(it->first);
 							flag2 = 1;
+							score++;
+							jugador.setScore(score);
 							break;
 						}
 					}
@@ -138,12 +122,15 @@ void main() {
 						if (it->second.second == jugador.getStringElement(n1-1)) {
 							jugador.pushToInv(it->first);
 							flag2 = 1;
+							score++;
+							jugador.setScore(score);
 							break;
 						}
 					}
 				}
 			}
 			else {
+				//Comprobación de ordenes introducidas
 				if (palabras.count(command) == 0)
 				{
 					std::cout << "Command unrecognized. Please type help to see the list of commands." << std::endl;
@@ -153,6 +140,7 @@ void main() {
 					flag2 = 1;
 				}
 
+				//Llamadas a todos los métodos necesarios para el juego, cada uno con su correspondiente clase
 				switch (palabras[command])
 				{
 				case PALABRA::ADD:
