@@ -75,6 +75,8 @@ void main() {
 	std::cout << "-Enter 'help' to show this tutorial again" << std::endl << std::endl << std::endl;
 	std::cout << "GOOD LUCK ALCHEMIST!" << std::endl << std::endl;
 	int flag = 0;
+	int n1, n2;
+
 	do {
 		//´Para parar el juego debemos pulsar escape
 		if (_kbhit()) {
@@ -92,6 +94,7 @@ void main() {
 		}
 		std::string command;
 		std::string parameter;
+
 		std::string input;
 		bool param;
 		bool numbers;
@@ -111,7 +114,26 @@ void main() {
 				param = false;
 			}
 
-			
+			//Creamos un nuevo elemento
+			if (atoi(command.c_str()) != 0) {
+				n1 = atoi(command.c_str());
+				n2 = atoi(parameter.c_str());
+
+				for (auto it = datos.mapa.begin(); it != datos.mapa.end(); it++) {
+					if (it->second.first == jugador.getStringElement(n1))
+					{
+						if (it->second.second == jugador.getStringElement(n2)) {
+							jugador.
+						}
+					}
+					else if(it->second.first == jugador.getStringElement(n2))
+					{
+						if (it->second.second == jugador.getStringElement(n1)) {
+
+						}
+					}
+				}
+			}
 			
 			if (palabras.count(command) == 0) { std::cout << "Command unrecognized. Please type help to see the list of commands." << std::endl; }
 		} while (palabras.count(command) == 0);
