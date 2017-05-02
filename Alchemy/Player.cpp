@@ -61,6 +61,11 @@ std::vector<std::string> Player::getDesc()
 	return descubiertos;
 }
 
+void Player::pushToInv(std::string element)
+{
+	inventario.push_back(element);
+}
+
 std::string Player::getStringElement(int num)
 {
 	return inventario[num];
@@ -68,6 +73,23 @@ std::string Player::getStringElement(int num)
 
 void Player::sort()
 {
+	bool flag = true;
+	int j = 0;
+	std::string tmp;
+	while (flag)
+	{
+		flag = false;
+		j++;
+		for (int i = 0; i < inventario.size() - j; i++)
+		{
+			if (inventario[i] > inventario[i + 1]) {
+				tmp = inventario[i];
+				inventario[i] = inventario[i + 1];
+				inventario[i + 1] = tmp;
+				flag = true;
+			}
+		}
+	}
 }
 
 void Player::clean()

@@ -20,6 +20,7 @@ public:
 	std::string getStringElement(int);				//Metodo para consultar el nombre de un elemento dado su numero
 	void sort();									//Metodo de ordenado del inventario del jugador
 	void clean();									//Metodo para eliminar todos los elementos repetidos del inventario
+	void pushToInv(std::string);
 
 private:
 
