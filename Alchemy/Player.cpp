@@ -52,7 +52,7 @@ int Player::getInventorySize()
 	return inventario.size();
 }
 
-void Player::updateDesc(std::string elemento)
+void Player::pushToDesc(std::string elemento)
 {
 	descubiertos.push_back(elemento);
 }
