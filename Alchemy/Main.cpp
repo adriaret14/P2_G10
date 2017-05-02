@@ -75,10 +75,15 @@ void main() {
 	std::cout << "-Enter 'help' to show this tutorial again" << std::endl << std::endl << std::endl;
 	std::cout << "GOOD LUCK ALCHEMIST!" << std::endl << std::endl;
 	int flag = 0;
+	int flag2 = 0;
 	int n1, n2;
 
 	do {
-		//´Para parar el juego debemos pulsar escape
+		std::cin.clear(); // clears all error state flags
+						  // extracts characters from the input buffer and discards them
+		std::cin.ignore(std::cin.rdbuf()->in_avail());
+
+		//Para parar el juego debemos pulsar escape
 		if (_kbhit()) {
 			if (_getch()==27) {
 				flag = 1;
@@ -88,15 +93,15 @@ void main() {
 		std::cout << "Your current score: " << jugador.getScore() << std::endl;
 		std::cout << "You have these elements: " << std::endl;
 
-		//Pol para recorrer vctores, dado que nos permiten acceder por posicion ahorrate los iteradores, es mas eficaz usar un contador.
+		
 		for (int i=0; i < jugador.getInventorySize(); i++) { 
 			std::cout << i+1 << ": " << jugador.getStringElement(i) << std::endl;	
 		}
-		std::string command;
-		std::string parameter;
+		std::string command="";
+		std::string parameter="";
 
 		std::string input;
-		bool param;
+		bool param=false;
 		bool numbers;
 		do {
 			std::cout << std::endl << "What do you want to do?" << std::endl;
@@ -120,50 +125,66 @@ void main() {
 				n2 = atoi(parameter.c_str());
 
 				for (auto it = datos.mapa.begin(); it != datos.mapa.end(); it++) {
-					if (it->second.first == jugador.getStringElement(n1))
+					if (it->second.first == jugador.getStringElement(n1-1))
 					{
-						if (it->second.second == jugador.getStringElement(n2)) {
-							jugador.
+						if (it->second.second == jugador.getStringElement(n2-1)) {
+							jugador.pushToInv(it->first);
+							flag2 = 1;
+							break;
 						}
 					}
-					else if(it->second.first == jugador.getStringElement(n2))
+					else if(it->second.first == jugador.getStringElement(n2-1))
 					{
-						if (it->second.second == jugador.getStringElement(n1)) {
-
+						if (it->second.second == jugador.getStringElement(n1-1)) {
+							jugador.pushToInv(it->first);
+							flag2 = 1;
+							break;
 						}
 					}
 				}
 			}
-			
-			if (palabras.count(command) == 0) { std::cout << "Command unrecognized. Please type help to see the list of commands." << std::endl; }
-		} while (palabras.count(command) == 0);
-			
-		
-		switch (palabras[command])//-_-  malditas enums tt.   -SOLVED- 	 Cheers, love! The cavalry's here! <3     -hahahahaa
-		{
-			case PALABRA::ADD:
-				if (parameter == "basics") {
-					jugador.addBasics();
+			else {
+				if (palabras.count(command) == 0)
+				{
+					std::cout << "Command unrecognized. Please type help to see the list of commands." << std::endl;
+					flag2 = 0;
 				}
 				else {
-					jugador.addElement(std::stoi(parameter)-1);
+					flag2 = 1;
 				}
-				break;
-			case PALABRA::DEL:
-				jugador.delElement(std::stoi(parameter) - 1);
-				break;
-			case PALABRA::INFO:
-				entrada.info(std::stoi(parameter)-1);
-				break;
-			case PALABRA::SORT:
-				jugador.sort();
-				break;
-			case PALABRA::CLEAN:
-				jugador.clean();
-				break;
-			case PALABRA::HELP:
-				entrada.help();
-				break;					
-		}
+
+				switch (palabras[command])
+				{
+				case PALABRA::ADD:
+					if (parameter == "basics") {
+						jugador.addBasics();
+					}
+					else {
+						jugador.addElement(std::stoi(parameter) - 1);
+					}
+					break;
+				case PALABRA::DEL:
+					jugador.delElement(std::stoi(parameter) - 1);
+					break;
+				case PALABRA::INFO:
+					entrada.info(std::stoi(parameter) - 1);
+					break;
+				case PALABRA::SORT:
+					jugador.sort();
+					break;
+				case PALABRA::CLEAN:
+					jugador.clean();
+					break;
+				case PALABRA::HELP:
+					entrada.help();
+					break;
+				}
+
+			}
+			
+			
+		} while (flag2==0);
+					
+		
 	} while (flag!=1);
 }
