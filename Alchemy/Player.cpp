@@ -67,6 +67,17 @@ void Player::pushToInv(std::string element)
 	inventario.push_back(element);
 }
 
+bool Player::notInDesc(std::string str)
+{
+	for (std::vector<std::string>::iterator it = descubiertos.begin(); it != descubiertos.end(); ++it)
+	{
+		if (*it == str) {
+			return false;
+		}
+	}
+	return true;
+}
+
 std::string Player::getStringElement(int num)
 {
 	return inventario[num];
