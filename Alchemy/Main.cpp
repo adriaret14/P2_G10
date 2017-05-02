@@ -107,25 +107,17 @@ void main() {
 
 				//Comprobación de combinación introducida con el archivo que hace de BBDD
 				for (auto it = datos.mapa.begin(); it != datos.mapa.end(); it++) {
-					if (it->second.first == jugador.getStringElement(n1-1))
+					if (((it->second.first == jugador.getStringElement(n1-1)) && (it->second.second == jugador.getStringElement(n2 - 1))) || (it->second.first == jugador.getStringElement(n2 - 1)) && (it->second.second == jugador.getStringElement(n1 - 1)))
 					{
-						if (it->second.second == jugador.getStringElement(n2-1)) {
 							jugador.pushToInv(it->first);
 							flag2 = 1;
-							score++;
-							jugador.setScore(score);
+							if (jugador.notInDesc(it->first))
+							{
+								score++;
+								jugador.setScore(score);
+								jugador.pushToDesc(it->first);
+							}
 							break;
-						}
-					}
-					else if(it->second.first == jugador.getStringElement(n2-1))
-					{
-						if (it->second.second == jugador.getStringElement(n1-1)) {
-							jugador.pushToInv(it->first);
-							flag2 = 1;
-							score++;
-							jugador.setScore(score);
-							break;
-						}
 					}
 				}
 			}
