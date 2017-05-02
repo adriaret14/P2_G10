@@ -117,7 +117,7 @@ void main() {
 		} while (palabras.count(command) == 0);
 			
 		
-		switch (palabras[command])//-_-  malditas enums tt.   -SOLVED- 	 Cheers, love! The cavalry's here! <3     -hahahahaa
+		switch (palabras[command])
 		{
 			case PALABRA::ADD:
 				if (parameter == "basics") {
