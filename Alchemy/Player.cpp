@@ -52,7 +52,7 @@ int Player::getInventorySize()
 	return inventario.size();
 }
 
-void Player::updateDesc(std::string elemento)
+void Player::pushToDesc(std::string elemento)
 {
 	descubiertos.push_back(elemento);
 }
@@ -65,6 +65,17 @@ std::vector<std::string> Player::getDesc()
 void Player::pushToInv(std::string element)
 {
 	inventario.push_back(element);
+}
+
+bool Player::notInDesc(std::string str)
+{
+	for (std::vector<std::string>::iterator it = descubiertos.begin(); it != descubiertos.end(); ++it)
+	{
+		if (*it == str) {
+			return false;
+		}
+	}
+	return true;
 }
 
 std::string Player::getStringElement(int num)

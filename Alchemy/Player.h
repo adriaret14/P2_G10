@@ -15,12 +15,13 @@ public:
 	void delElement(int);							//Metodo para eliminar un elemento de del inventario del jugador
 	std::vector<std::string> getInv();				//Metodo para consultar el inventario del jugador
 	int getInventorySize();							//Metodo para consultar el tamaño de mi inventario
-	void updateDesc(std::string);					//Metodo para modificar la lista de elementos descubiertos del jugador
+	void pushToDesc(std::string);					//Metodo para modificar la lista de elementos descubiertos del jugador
 	std::vector<std::string> getDesc();				//Metodo para consultar la lista de elementos descubiertos
 	std::string getStringElement(int);				//Metodo para consultar el nombre de un elemento dado su numero
 	void sort();									//Metodo de ordenado del inventario del jugador
 	void clean();									//Metodo para eliminar todos los elementos repetidos del inventario
-	void pushToInv(std::string);
+	void pushToInv(std::string);					//Metodo para añadir un nuevo elemento al inventario
+	bool notInDesc(std::string);					//metodo para comprobar si un elemento esta en descubiertos
 
 private:
 
