@@ -14,15 +14,21 @@ Input::~Input()
 
 void Input::info(int nElemento)
 {
-	//Buscamos el nombre del elemento a partir del entero recibido por parámetro
-	std::string elemento = p.getStringElement(nElemento);
-	//Preparamos la cadena y la convertimos al formato conveniente
-	std::string url = "https://en.wikipedia.org/wiki/"+elemento;
-	char * cadena = new char[url.length() + 1];
-	strcpy_s(cadena,strlen(cadena), url.c_str());
+	if (nElemento<0 || nElemento>p.getInventorySize())
+	{
+		std::cout << "You need to write the number of an element in your inventory!" << std::endl;
+	}
+	else {
+		//Buscamos el nombre del elemento a partir del entero recibido por parámetro
+		std::string elemento = p.getStringElement(nElemento);
+		//Preparamos la cadena y la convertimos al formato conveniente
+		std::string url = "https://en.wikipedia.org/wiki/" + elemento;
+		char * cadena = new char[url.length() + 1];
+		strcpy_s(cadena, strlen(cadena), url.c_str());
 
-	//Llamamos a la funcion para ejecutar aplicaciones externas
-	ShellExecuteA(nullptr, "open", cadena, nullptr, nullptr, SW_SHOWNORMAL);
+		//Llamamos a la funcion para ejecutar aplicaciones externas
+		ShellExecuteA(nullptr, "open", cadena, nullptr, nullptr, SW_SHOWNORMAL);
+	}
 
 }
 

@@ -1,6 +1,6 @@
 #include "Player.h"
 #include <algorithm>
-
+#include <iostream>
 
 
 Player::Player() :
@@ -39,7 +39,13 @@ void Player::addElement(int num)
 
 void Player::delElement(int i)
 {
-	inventario.erase(inventario.begin() + i);
+	if (i>=0 && i<this->getInventorySize())
+	{
+		inventario.erase(inventario.begin() + i);
+	}
+	else {
+		std::cout << "Can't delete the element" << std::endl;
+	}
 }
 
 std::vector<std::string> Player::getInv()
