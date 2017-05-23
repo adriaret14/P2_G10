@@ -100,26 +100,29 @@ void main() {
 			}
 
 			//Creamos un nuevo elemento, comprobando independientemente del orden en el que pongamos los elementos
-			if (atoi(command.c_str()) != 0) {
-				//Parse string -> int 
-				n1 = atoi(command.c_str());
-				n2 = atoi(parameter.c_str());
+			if (atoi(command.c_str()) > 0 && atoi(command.c_str()) < jugador.getInventorySize()) {
+					//Parse string -> int 
+					if (atoi(parameter.c_str()) > 0 && atoi(parameter.c_str()) < jugador.getInventorySize()) {
+						n1 = atoi(command.c_str());
+						n2 = atoi(parameter.c_str());
 
-				//Comprobación de combinación introducida con el archivo que hace de BBDD
-				for (auto it = datos.mapa.begin(); it != datos.mapa.end(); it++) {
-					if (((it->second.first == jugador.getStringElement(n1-1)) && (it->second.second == jugador.getStringElement(n2 - 1))) || (it->second.first == jugador.getStringElement(n2 - 1)) && (it->second.second == jugador.getStringElement(n1 - 1)))
-					{
-							jugador.pushToInv(it->first);
-							flag2 = 1;
-							if (jugador.notInDesc(it->first))
+						//Comprobación de combinación introducida con el archivo que hace de BBDD
+						for (auto it = datos.mapa.begin(); it != datos.mapa.end(); it++) {
+							if (((it->second.first == jugador.getStringElement(n1 - 1)) && (it->second.second == jugador.getStringElement(n2 - 1))) || (it->second.first == jugador.getStringElement(n2 - 1)) && (it->second.second == jugador.getStringElement(n1 - 1)))
 							{
-								score++;
-								jugador.setScore(score);
-								jugador.pushToDesc(it->first);
+								jugador.pushToInv(it->first);
+								flag2 = 1;
+								if (jugador.notInDesc(it->first))
+								{
+									score++;
+									jugador.setScore(score);
+									jugador.pushToDesc(it->first);
+								}
+								break;
 							}
-							break;
+						}
 					}
-				}
+				
 			}
 			else {
 				//Comprobación de ordenes introducidas
@@ -129,7 +132,14 @@ void main() {
 					flag2 = 0;
 				}
 				else {
-					flag2 = 1;
+					//Comprobamos que las unicas ordenes permitidas sean las del juego
+					if (parameter == "basics" || atoi(parameter.c_str()) != 0)
+					{
+						flag2 = 1;
+					}
+					else {
+						std::cout << "Orden no reconocida, porfavor vuelve a introducir una orden valida" << std::endl;
+					}
 				}
 
 				//Llamadas a todos los métodos necesarios para el juego, cada uno con su correspondiente clase
@@ -139,7 +149,7 @@ void main() {
 					if (parameter == "basics") {
 						jugador.addBasics();
 					}
-					else {
+					else if(atoi(parameter.c_str()) > 0 && atoi(parameter.c_str()) < jugador.getInventorySize()){
 						jugador.addElement(std::stoi(parameter) - 1);
 					}
 					break;
