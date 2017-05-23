@@ -22,6 +22,15 @@ enum class PALABRA {
 	MAX
 };
 
+template<>
+struct std::hash<std::pair<std::string, std::string>>
+{
+	size_t operator()(const std::pair<std::string, std::string> &pair) const
+	{
+		return ((std::hash<std::string>()(pair.first) ^ (std::hash<std::string>()(pair.second) << 1)) >> 1);
+	}
+};
+
 void main() {
 
 	//Creamos los objetos y variables necesarios
@@ -107,20 +116,31 @@ void main() {
 						n2 = atoi(parameter.c_str());
 
 						//Comprobación de combinación introducida con el archivo que hace de BBDD
-						for (auto it = datos.mapa.begin(); it != datos.mapa.end(); it++) {
-							if (((it->second.first == jugador.getStringElement(n1 - 1)) && (it->second.second == jugador.getStringElement(n2 - 1))) || (it->second.first == jugador.getStringElement(n2 - 1)) && (it->second.second == jugador.getStringElement(n1 - 1)))
+						std::unordered_map<std::pair<std::string, std::string>, std::string>::const_iterator combinacion1 = datos.mapa.find({ jugador.getInv()[n1-1], jugador.getInv()[n2-1] });
+						std::unordered_map<std::pair<std::string, std::string>, std::string>::const_iterator combinacion2 = datos.mapa.find({ jugador.getInv()[n2 - 1], jugador.getInv()[n1 - 1] });
+						if (combinacion1 != datos.mapa.end())
+						{
+							jugador.pushToInv(combinacion1->second);
+							flag2 = 1;
+							if (jugador.notInDesc(combinacion1->second))
 							{
-								jugador.pushToInv(it->first);
-								flag2 = 1;
-								if (jugador.notInDesc(it->first))
-								{
-									score++;
-									jugador.setScore(score);
-									jugador.pushToDesc(it->first);
-								}
-								break;
+								score++;
+								jugador.setScore(score);
+								jugador.pushToDesc(combinacion1->second);
 							}
 						}
+						else if (combinacion2 != datos.mapa.end())
+						{
+							jugador.pushToInv(combinacion2->second);
+							flag2 = 1;
+							if (jugador.notInDesc(combinacion2->second))
+							{
+								score++;
+								jugador.setScore(score);
+								jugador.pushToDesc(combinacion2->second);
+							}
+						}
+						
 					}
 				
 			}

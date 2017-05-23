@@ -36,7 +36,7 @@ DataManagement::DataManagement(std::string url)
 			separaciones[2] = linia.substr(pos1 + 2);
 
 			//Guardamos todos los datos en el container STL unordered_map<std::string, std::pair<std::string, std::string>>
-			mapa[separaciones[0]] = { separaciones[1], separaciones[2] };
+			mapa[{ separaciones[1], separaciones[2] }] = separaciones[0];
 		}
 	}
 	
