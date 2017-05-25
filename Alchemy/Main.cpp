@@ -22,15 +22,6 @@ enum class PALABRA {
 	MAX
 };
 
-template<>
-struct std::hash<std::pair<std::string, std::string>>
-{
-	size_t operator()(const std::pair<std::string, std::string> &pair) const
-	{
-		return ((std::hash<std::string>()(pair.first) ^ (std::hash<std::string>()(pair.second) << 1)) >> 1);
-	}
-};
-
 void main() {
 
 	//Creamos los objetos y variables necesarios
